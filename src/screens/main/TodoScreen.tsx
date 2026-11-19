@@ -6,12 +6,14 @@ import FilterBar from '@/components/common/FilterBar';
 import useTodos from '@/hooks/useTodos';
 import { Filter } from '@/models/todo.model';
 
+
+
+
 const TodoScreen = () => {
   const { todos, loading, doneCount, addTodo, toggleTodo, deleteTodo } = useTodos();
   const [text, setText] = useState<string>('');
   const [filter, setFilter] = useState<Filter>('all');
 const inputRef = useRef<ComponentRef<typeof TextInput>>(null);
-
 
 
   const handleAdd = () => {
@@ -27,7 +29,7 @@ const inputRef = useRef<ComponentRef<typeof TextInput>>(null);
   });
 
   if (loading) {
-    return <Text style={styles.loading}>Loading...</Text>;
+    return null;
   }
 
   return (

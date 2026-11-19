@@ -11,7 +11,7 @@ const API_URLS: Record<AppEnv, string | undefined> = {
   production: process.env.EXPO_PUBLIC_API_URL_PROD,
 };
 
-const apiUrl = API_URLS[APP_ENV];
+const apiUrl = API_URLS[APP_ENV] || 'https://api.example.com';
 
 if (!apiUrl) {
   throw new Error(`API URL missing for "${APP_ENV}". .env file check pannunga.`);

@@ -5,21 +5,40 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
+    "android": {
+      "package": "com.yourname.todoapp",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundColor": "#2563eb",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
+    },
     "ios": {
       "supportsTablet": true
     },
-    "android": {
-      "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
-      },
-      "predictiveBackGestureEnabled": false
-    },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 200,
+          "backgroundColor": "#ffffff",
+          "dark": {
+            "image": "./assets/splash-icon.png",
+            "backgroundColor": "#0f172a"
+          }
+        }
+      ]
+    ],
+    "extra": {
+      "appEnv": "development",
+      "eas": {
+        "projectId": "88139db6-dfc7-4746-abbc-913ed4c2a9c9"
+      }
     }
   }
 }

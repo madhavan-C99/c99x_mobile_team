@@ -1,16 +1,164 @@
-import { env } from '@/config/env';
-console.log('ENV:', env);
+
+import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import * as SplashScreen from 'expo-splash-screen';
 import TodoScreen from '@/screens/main/TodoScreen';
+import SplashScreenView from '@/screens/SplashScreenView';
+
+// Native OS splash-ai screen-la hold panni vekkirom
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    // 1. Native splash-ai hide panrom
+    SplashScreen.hideAsync();
+
+    // 2. Namma custom splash content 2.5 seconds (2500ms) screen-la kaatitu main screen-ku pogum
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 2500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // First 2.5 seconds custom splash (Logo + Name + Spinner) theriyum:
+  if (showSplash) {
+    return (
+      <>
+        <SplashScreenView />
+        <StatusBar style="light" />
+      </>
+    );
+  }
+
+  // 2.5 seconds kalithu TodoScreen varum:
   return (
     <>
       <TodoScreen />
-      <StatusBar style="auto" />
+      <StatusBar style="dark" />
+      <ProfileCard />
     </>
   );
 }
+
+// TOPIC 2: Core Components & Mobile Flexbox (TASK-007)
+import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { Image } from 'expo-image';
+
+function ProfileCard() {
+  return (
+    // Line 3: Outer container - idhula flex: 1 pota screen muzhuka occupy pannum
+    <View style={styles.cardContainer}>
+      <Text style={styles.actionBtn1}>Welcome to My Profile Card!</Text>
+      {/* Line 4: Row layout for Avatar + User Info side-by-side */}
+      <View style={styles.headerRow}>
+        <Image
+          source={{ uri: 'https://i.pravatar.cc/150?img=12' }}
+          style={styles.avatar}
+          contentFit="cover"
+          transition={500}
+        />
+        <View style={styles.infoCol}>
+          <Text style={styles.userName}>Bharath M</Text>
+          <Text style={styles.userRole}>Python Developer</Text>
+          <Text style={styles.userRole}>React Native Developer</Text>
+
+        </View>
+
+      </View>
+
+
+      {/* Line 5: Interactive Follow Button */}
+      <Pressable
+        android_ripple={{ color: '#1d4ed8' }}
+        style={({ pressed }) => [
+          styles.actionBtn,
+          pressed && styles.actionBtnPressed
+        ]}
+        onPress={() => alert('Following!')}
+      >
+        <Text style={styles.btnText}>Follow</Text>
+      </Pressable>
+
+    </View>
+  );
+}
+
+// Line 6: Mobile styles definition
+const styles = StyleSheet.create({
+  cardContainer: {
+    backgroundColor: '#ffffff',
+    borderRadius: 16,
+    padding: 16,
+    // width: '50%',
+    // height: 200,
+    margin: 16,
+    // Mobile shadow (Elevation for Android, shadow props for iOS)
+    elevation: 4,
+    shadowColor: '#000000',
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  headerRow: {
+    flexDirection: 'row', // Horizontal alignment (Avatar left, Details right)
+    alignItems: 'center', // Vertical center in row
+    gap: 12,              // Space between avatar and text
+  },
+  avatar: {
+    width: 120,
+    height: 120,
+    borderRadius: 60, // Circle aaga matha half of width/height
+  },
+  infoCol: {
+    flex: 1, // Remaining horizontal space muzhuka eduthukum
+    flexDirection: 'column',
+  },
+    infoCol1: {
+    // flex: 1, // Remaining horizontal space muzhuka eduthukum
+    flexDirection: 'column',
+  },
+  userName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#0f172a',
+  },
+  userRole: {
+    fontSize: 14,
+    color: '#64748b',
+    marginTop: 2,
+  },
+  actionBtn: {
+    marginTop: 126,
+    marginBottom: 80,
+    backgroundColor: '#25ebd1',
+    paddingVertical: 10,
+    borderRadius: 8,
+    alignItems: 'center', // Text-ai horizontal center seiyum
+  },
+  actionBtnPressed: {
+    opacity: 0.8,
+  },
+  btnText: {
+    color: '#ffffff',
+    fontSize: 15,
+    fontWeight: '600',
+  },
+    actionBtn1: {
+    marginTop: 126,
+    marginBottom: 80,
+    textAlign: 'center',
+    color: '#634747',
+    fontSize: 17,
+    fontWeight: '900',
+    backgroundColor: '#3ceb25',
+    paddingVertical: 10,
+    borderRadius: 8,
+    alignItems: 'center', // Text-ai horizontal center seiyum
+  },
+});
 
 
 

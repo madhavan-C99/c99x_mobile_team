@@ -18,10 +18,35 @@ const IDS: Record<AppEnv, string> = {
 };
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
-  ...config,
-  name: NAMES[APP_ENV],
-  slug: config.slug ?? 'todo-app',
-  ios: { ...config.ios, bundleIdentifier: IDS[APP_ENV] },
-  android: { ...config.android, package: IDS[APP_ENV] },
-  extra: { ...config.extra, appEnv: APP_ENV },
+...config,
+name: NAMES[APP_ENV],
+slug: 'todo-app',
+version: '1.0.0',
+icon: './assets/images/icon.png',
+userInterfaceStyle: 'automatic',
+android: {
+...config.android,
+package: IDS[APP_ENV],
+adaptiveIcon: {
+foregroundImage: './assets/images/adaptive-icon.png',
+backgroundColor: '#2563eb',
+monochromeImage: './assets/images/monochrome-icon.png',
+},
+},
+ios: { ...config.ios, bundleIdentifier: IDS[APP_ENV] },
+plugins: [
+[
+'expo-splash-screen',
+{
+image: './assets/images/splash-icon.png',
+imageWidth: 200,
+backgroundColor: '#ffffff',
+dark: {
+image: './assets/images/splash-icon.png',
+backgroundColor: '#0f172a',
+},
+},
+],
+],
+extra: { ...config.extra, appEnv: APP_ENV },
 });
